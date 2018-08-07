@@ -92,8 +92,22 @@ open class QuickTableViewController: UIViewController,
     return tableContents[section].rows.count
   }
 
-  open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return tableContents[section].title
+//  open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//    return tableContents[section].title
+//  }
+
+  public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if let title = tableContents[section].title {
+      let label = UILabel()
+      let paragraphStyle = NSMutableParagraphStyle()
+      paragraphStyle.maximumLineHeight = 16
+      paragraphStyle.minimumLineHeight = 16
+      label.attributedText = NSAttributedString(string: title, attributes: [NSAttributedStringKey.kern: 1,
+                                                                                          NSAttributedStringKey.paragraphStyle: paragraphStyle])
+      return label
+    }
+
+    return nil
   }
 
   open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
